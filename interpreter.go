@@ -22,8 +22,7 @@ type Bool bool
 //A variable is just an alias for an expression
 type vars map[Variable]expr
 
-//A procedure is executed within an environment
-//and has paramteres as well as a body expression
+//A procedure is executed within an environment and has parameters as well as a body expression
 type proc struct {
 	params expr
 	body   expr
@@ -40,34 +39,6 @@ func tokenize(chars string) []string {
 	tokens := strings.Fields(strings.Replace(strings.Replace(chars, "(", " ( ", -1), ")", " ) ", -1))
 	return tokens //Exclude leading and last whitespace
 }
-
-/*func parenthesize(input []string, list []interface{}) []interface{} {
-	if list == nil {
-		l := []interface{}{}
-		return parenthesize(input, l)
-	} else {
-		token := input[0]
-		input = input[1:]
-
-		//fmt.Println(token)
-
-		if token == " " {
-			old := input[:len(input)-1]
-			l := make([]interface{}, len(old))
-			for i, v := range old {
-				l[i] = v
-			}
-			return l
-		} else if token == "(" {
-			list = append(list, parenthesize(input, []interface{}{}))
-			return parenthesize(input, list)
-		} else if token == ")" {
-			return list
-		} else {
-			return parenthesize(input, append(list, categorize(token)...))
-		}
-	}
-}*/
 
 func (e *env) Find(s Variable) *env {
 	if _, ok := e.vars[s]; ok {
@@ -124,7 +95,6 @@ func findParentheses(tokens []string, start int) []int {
 		} else if tokens[i] == ")" {
 			openingPos := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
-			//fmt.Printf("Opening ( %v : %d || Closing ) : %d \n", tokens[openingPos+1], openingPos, i)
 			partBeginning = openingPos
 			partEnding = i
 		}

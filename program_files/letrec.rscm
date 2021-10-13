@@ -1,0 +1,14 @@
+(define factorial
+  (λ (start)
+    (letrec (
+             (factorial-tail
+              (λ (n prodFact)
+                (cond
+                  ((= n 1) prodFact)
+                  (else (factorial-tail (- n 1) (* n prodFact))))
+                )))
+      (factorial-tail start 1))
+    ))
+
+(factorial 5)
+
